@@ -53,4 +53,4 @@ def read_csv_file(file_path):
 
 sleep(5)  # 延迟 5 秒执行，请 5 秒内打开活动窗！
 # 读取文件
-read_csv_file('data/problems.csv')
+read_csv_file('/Users/zhangbinxuan/Downloads/dunhuang')
