@@ -11,11 +11,9 @@ from docx import Document
 template1 = '''
 根据以下文旅知识：
 "{content}"
-请你为我构造一个多轮问答数据，包含用户的问题instruction和你认为的标准答案output。格式为：
-{ "instruction": "", "input": "", "output": " "  },
-{ "instruction": "", "input": "", "output": " "  },
-{ "instruction": "", "input": "", "output": " "  },
-'''
+请你为我构造一个多轮问答数据，包含用户的问题和你认为的标准答案。格式为：
+用户：[]。
+回答：[]。'''
 template2 = '''
 根据以下文旅知识：
 "{content}"
@@ -55,17 +53,8 @@ def process_text(content, selected_template):
                 pyautogui.press('v')  # 模拟 'v' 键，进行粘贴
                 pyautogui.keyUp('command')  # 松开 'command' 键
 
-            # 检查 Enter 键是否按下成功
-            enter_key_success = pyautogui.press('enter')
-            if enter_key_success:
-                print("Enter 键按下成功！")
-            else:
-                print("Enter 键按下失败，等待 5 秒后重试...")
-                sleep(5)  # 等待 5 秒
-                pyautogui.press('enter')  # 再次模拟按下 'enter' 键
-
+            pyautogui.press('enter')  # 模拟 'enter' 键，发送文本
             sleep(10)  # 等待 10 秒
-
 
 
 sleep(5)  # 延迟 5 秒执行，请 5 秒内打开活动窗！
@@ -76,7 +65,5 @@ content = read_word_file('/Users/zhangbinxuan/Downloads/dunhuang.docx')
 # 选择要使用的模板（1 或 2）
 selected_template = template1  # 在这里指定要使用的模板
 
-
 # 处理提取的内容v
 process_text(content, selected_template)
-
