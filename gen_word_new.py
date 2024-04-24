@@ -7,26 +7,26 @@ from docx import Document
 template1 = '''
 根据以下文旅知识：
 "{content}"
-请你为我构造一个多轮问答数据，包含用户的问题instruction和你认为的标准答案output。格式为：
+请你为我构造一个多轮问答数据,包含用户的问题instruction和你认为的标准答案output,你认为的标准答案请尽可能的字数多一点，输出结构化 JSON 对象：
 { "instruction": "", "input": "", "output": " "  },
 '''
 template2 = '''
 根据以下文旅知识：
 "{content}"
-从【文旅管理单位】的角度出发,请你为我构造一个多轮问答数据,包含用户的问题instruction和你认为的标准答案output,输出结构化 JSON 对象：
+从【文旅管理单位】的角度出发,请你为我构造一个多轮问答数据,包含用户的问题instruction和你认为的标准答案output,你认为的标准答案请尽可能的字数多一点，输出结构化 JSON 对象：
 { "instruction": "", "input": "", "output": " "  },
 '''
-template3 = '''
+template3 = '''v
 根据以下文旅知识：
 
 "{content}"
-从【游客】的角度出发，请你为我构造一个多轮问答数据，包含用户的问题instruction和你认为的标准答案output。格式为：
+从【游客】的角度出发，请你为我构造一个多轮问答数据,包含用户的问题instruction和你认为的标准答案output,你认为的标准答案请尽可能的字数多一点，输出结构化 JSON 对象：
 { "instruction": "", "input": "", "output": " "  },
 '''
 template4 = '''
 根据以下文旅知识：
 "{content}"
-从【旅游平台】的角度出发，请你为我构造一个多轮问答数据，包含用户的问题instruction和你认为的标准答案output。格式为：
+从【旅游平台】的角度出发，请你为我构造一个多轮问答数据,包含用户的问题instruction和你认为的标准答案output,你认为的标准答案请尽可能的字数多一点，输出结构化 JSON 对象：
 { "instruction": "", "input": "", "output": " "  },
 '''
 
@@ -74,7 +74,7 @@ def process_text(content, selected_template):
                 sleep(5)
                 pyautogui.press('enter')
 
-            sleep(10)
+            sleep(20)
 
 
 sleep(5)

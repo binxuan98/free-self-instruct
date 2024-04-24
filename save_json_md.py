@@ -61,7 +61,7 @@ def main():
     json_data = extract_json_from_markdown(md_path)
 
     if json_data:
-        save_path = "/Users/zhangbinxuan/Downloads/json_ceshi-2.json"   # 替换成你想要保存的 JSON 文件的路径
+        save_path = "/Users/zhangbinxuan/Downloads/json_ceshi.json"   # 替换成你想要保存的 JSON 文件的路径
 
         # 写入到文件中
         with open(save_path, 'w', encoding='utf-8') as f:
