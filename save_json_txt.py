@@ -1,16 +1,14 @@
 import json
 import re
-import markdown
 
-def extract_json_from_markdown(md_path):
-    with open(md_path, 'r', encoding='utf-8') as f:
+def extract_json_from_text(txt_path):
+    with open(txt_path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    html = markdown.markdown(content)
     json_data = []
 
-    # 尝试从段落中提取 JSON 数据
-    json_objs = get_objects_from_string(html)
+    # 尝试从文本中提取 JSON 数据
+    json_objs = get_objects_from_string(content)
     if json_objs:
         json_data.extend(json_objs)
 
@@ -32,13 +30,13 @@ def get_objects_from_string(s):
             pass
 
     return json_objs
-'''单独新增一个json文件'''
+
 def main():
-    md_path = "/Users/zhangbinxuan/Downloads/chat_ceshi.md"  # 替换成你的 Markdown 文件路径
-    json_data = extract_json_from_markdown(md_path)
+    txt_path = "/Users/zhangbinxuan/Downloads/1.txt"  # 替换成你的文本文件路径
+    json_data = extract_json_from_text(txt_path)
 
     if json_data:
-        save_path = "/Users/zhangbinxuan/Downloads/json_ceshi.json"   # 替换成你想要保存的 JSON 文件的路径
+        save_path = "/Users/zhangbinxuan/Downloads/json_ceshi-10.json"   # 替换成你想要保存的 JSON 文件的路径
 
         # 写入到文件中
         with open(save_path, 'w', encoding='utf-8') as f:
