@@ -12,7 +12,7 @@ class GUI:
     def __init__(self, master):
         self.master = master
         master.title("大模型自动对话脚本")
-        master.iconbitmap("/Users/zhangbinxuan/Documents/free-self-instruct/app/icon.ico")
+        master.iconbitmap("/Users/zhangbinxuan/Documents/free-self-instruct/app/大模型自动提问脚本app/icon.ico")
 
 
         self.should_pause = False  # 暂停标志
@@ -48,10 +48,10 @@ class GUI:
 
         # 在框架中放置按钮
         self.button_frame = tk.Frame(self.button_pause_frame)
-        self.button_frame.pack(side=tk.LEFT, padx=10, pady=2)
+        self.button_frame.pack(side=tk.LEFT, padx=5, pady=2)
 
         self.pause_frame = tk.Frame(self.button_pause_frame)
-        self.pause_frame.pack(side=tk.LEFT, padx=10, pady=2)
+        self.pause_frame.pack(side=tk.LEFT, padx=5, pady=2)
 
 
         self.sleep_frame = tk.Frame(master)

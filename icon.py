@@ -6,6 +6,6 @@ icon_path = "app/icon.png"  # 替换为你的 PNG 图标文件路径
 icon_image = Image.open(icon_path)
 
 # 将图标转换为 .ico 格式
-icon_ico_path = "app/icon.ico"  # 转换后的 .ico 文件路径
+icon_ico_path = "app/训练数据提取app/icon.ico"  # 转换后的 .ico 文件路径
 icon_image.save(icon_ico_path, format="ICO")
 
