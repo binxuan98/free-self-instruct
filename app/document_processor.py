@@ -41,5 +41,5 @@ class DocumentProcessor:
         elif platform.system() == 'Darwin':
             pyautogui.hotkey('command', 'v')
         pyautogui.press('enter')
-        sleep(20)
+        sleep(10)
         self.current_paragraph = index  # 更新当前段落索引
