@@ -47,7 +47,7 @@ def setup_gui(self):
     self.sleep_label.pack(side=tk.LEFT, padx=2, pady=2)
 
     self.sleep_value = tk.IntVar(self.master)
-    self.sleep_value.set(10)  # 设置默认等待时间为10秒
+    self.sleep_value.set(20)  # 设置默认等待时间为20秒
     self.sleep_entry = tk.Entry(self.sleep_frame, textvariable=self.sleep_value)
     self.sleep_entry.pack(side=tk.LEFT, padx=2, pady=2)
 
@@ -55,7 +55,7 @@ def setup_gui(self):
     self.sleep_reminder_label.pack(side=tk.LEFT, padx=2, pady=2)
 
     # JSON 数据收集区域
-    self.collect_json_label = tk.Label(self.json_frame, text="点击收集 JSON 数据", font=("Arial", 10))
+    self.collect_json_label = tk.Label(self.json_frame, text="等收集好txt文档后，点击下面按钮，一键自动转为 JSON 问答数据", font=("Arial", 10))
     self.collect_json_label.pack(padx=2, pady=2)
 
     self.collect_json_button = tk.Button(self.json_frame, text="收集 JSON", command=self.collect_json_data,height=3, width=10, bg="blue",

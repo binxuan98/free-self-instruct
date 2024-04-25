@@ -12,12 +12,17 @@ class GUI:
     def __init__(self, master):
         self.master = master
         master.title("大模型自动对话脚本")
-        master.iconbitmap("/Users/zhangbinxuan/Documents/free-self-instruct/app/大模型自动提问脚本app/icon.ico")
+        master.iconbitmap("icon.ico")
 
 
         self.should_pause = False  # 暂停标志
+        self.is_on_top = tk.BooleanVar(value=False)  # 是否置顶，默认为不置顶
 
         self.doc_processor = DocumentProcessor()
+
+        # 创建复选框用于控制置顶功能
+        self.topmost_checkbox = tk.Checkbutton(master, text="勾选此处\n将窗口置顶", variable=self.is_on_top, command=self.set_topmost)
+        self.topmost_checkbox.grid(row=0, column=0, padx=10, pady=2, sticky="w")
 
         # 创建各个功能区域的 Frame
         self.template_frame = tk.Frame(master)
@@ -163,6 +168,10 @@ class GUI:
                 messagebox.showinfo("提示", "未找到有效的 JSON 数据！")
         else:
             messagebox.showinfo("提示", "未选择文本文件！")
+
+    def set_topmost(self):
+        """根据复选框的选择设置窗口是否置顶"""
+        self.master.attributes("-topmost", self.is_on_top.get())
 
 root = tk.Tk()
 app = GUI(root)
