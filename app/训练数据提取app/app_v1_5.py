@@ -11,8 +11,8 @@ import gui_setup
 class GUI:
     def __init__(self, master):
         self.master = master
-        master.title("多轮问答数据生成器")
-        master.iconbitmap("icon.ico")
+        master.title("大模型自动对话脚本")
+        master.iconbitmap("/Users/zhangbinxuan/Documents/free-self-instruct/app/icon.ico")
 
 
         self.should_pause = False  # 暂停标志
@@ -21,31 +21,44 @@ class GUI:
 
         # 创建各个功能区域的 Frame
         self.template_frame = tk.Frame(master)
-        self.template_frame.grid(row=0, column=0, padx=10, pady=10)
+        self.template_frame.grid(row=0, column=1, padx=2, pady=2)
 
-        self.file_frame = tk.Frame(master)
-        self.file_frame.grid(row=1, column=0, padx=10, pady=5)
+
 
         self.output_frame = tk.Frame(master)
-        self.output_frame.grid(row=2, column=0, padx=10, pady=10)
+        self.output_frame.grid(row=2, column=1, padx=2, pady=2)
 
-        self.template_selection_frame = tk.Frame(master)
-        self.template_selection_frame.grid(row=3, column=0, padx=10, pady=5)
+        # 创建一个框架来包含 file_frame 和 template_selection_frame
+        self.file_template_frame = tk.Frame(master)
+        self.file_template_frame.grid(row=1, column=1, padx=2, pady=2)
 
-        self.button_frame = tk.Frame(master)
-        self.button_frame.grid(row=4, column=0, padx=10, pady=5)
+        # 放置 file_frame 和 template_selection_frame
+        self.file_frame = tk.Frame(self.file_template_frame)
+        self.file_frame.pack(side=tk.LEFT, padx=2, pady=2)
+
+        self.template_selection_frame = tk.Frame(self.file_template_frame)
+        self.template_selection_frame.pack(side=tk.LEFT, padx=2, pady=2)
 
         self.status_frame = tk.Frame(master)
-        self.status_frame.grid(row=5, column=0, padx=10, pady=5)
+        self.status_frame.grid(row=5, column=1, padx=2, pady=2)
 
-        self.pause_frame = tk.Frame(master)
-        self.pause_frame.grid(row=6, column=0, padx=10, pady=5)
+        # 创建一个框架来包含按钮
+        self.button_pause_frame = tk.Frame(master)
+        self.button_pause_frame.grid(row=4, column=1, padx=2, pady=2)
+
+        # 在框架中放置按钮
+        self.button_frame = tk.Frame(self.button_pause_frame)
+        self.button_frame.pack(side=tk.LEFT, padx=10, pady=2)
+
+        self.pause_frame = tk.Frame(self.button_pause_frame)
+        self.pause_frame.pack(side=tk.LEFT, padx=10, pady=2)
+
 
         self.sleep_frame = tk.Frame(master)
-        self.sleep_frame.grid(row=7, column=0, padx=10, pady=5)
+        self.sleep_frame.grid(row=6, column=1, padx=2, pady=2)
 
         self.json_frame = tk.Frame(master)
-        self.json_frame.grid(row=8, column=0, padx=10, pady=5)
+        self.json_frame.grid(row=7, column=1, padx=2, pady=2)
 
         # 直接调用 setup_gui 函数
         gui_setup.setup_gui(self)
