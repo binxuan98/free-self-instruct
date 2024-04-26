@@ -4,7 +4,7 @@ import tkinter as tk
 def setup_gui(self):
     # 模板内容显示区域
     self.template_content = tk.StringVar()
-    self.template_text = tk.Text(self.template_frame, height=5, width=50)
+    self.template_text = tk.Text(self.template_frame, height=10, width=50)
     self.template_text.pack(padx=2, pady=2)
 
     # 文件选择区域
@@ -21,13 +21,13 @@ def setup_gui(self):
     # 模板选择区域
     self.label_template = tk.Label(self.template_selection_frame, text="第2步:选择模板：")
     self.label_template.pack(side=tk.LEFT, padx=2, pady=2)
-
+    # 添加自定义模板选项
+    template_options = ["模板1", "模板2", "模板3", "模板4", "自定义"]  # List of template options including "自定义"
     self.selected_template = tk.StringVar(self.master)
     self.selected_template.set("模板1")  # 默认选择第一个模板
     self.template_option = tk.OptionMenu(self.template_selection_frame, self.selected_template,
-                                         "模板1", "模板2", "模板3", "模板4", command=self.update_template_text)
+                                         *template_options, command=self.update_template_text)
     self.template_option.pack(side=tk.LEFT, padx=2, pady=2)
-
     # 功能按钮区域
     self.process_button = tk.Button(self.button_frame, text="点此\n开始运行",  height=3, width=10, command=self.process_text, bg="green",
                                     fg="black")
@@ -89,6 +89,7 @@ def setup_gui(self):
         { "instruction": "", "input": "", "output": " "  },
         '''
     ]
+
 
     # 初始化模板文本框显示模板1的
     self.update_template_text("模板1")
