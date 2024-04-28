@@ -101,11 +101,62 @@ class GUI:
         # 倒计时结束，开始执行后续步骤
         Thread(target=self.process_text_thread).start()
 
+    def countdown_after_resume(self, seconds):
+        # 倒计时 5 秒
+        for i in range(seconds, 0, -1):
+            time.sleep(1)  # 暂停一秒
+            self.output_text.insert(tk.END, f"倒计时 {i} 秒...请将鼠标放置在网页对话框中\n")
+            self.output_text.see(tk.END)
+            self.master.update()
+        # 倒计时结束后，继续运行
+
+        self.should_pause = False  # 设置为继续状态
+
+    # def pause_resume_process(self):
+    #     if self.should_pause:  # 如果当前处于暂停状态
+    #         self.should_pause = False  # 设置为继续状态
+    #         self.pause_button.config(text="暂停")  # 修改按钮文本为“暂停”
+    #         self.pause_status_label.config(text="")  # 清空状态信息
+    #     else:
+    #         self.should_pause = True  # 设置为暂停状态
+    #         self.pause_button.config(text="继续")  # 修改按钮文本为“继续”
+    #         timestamp = datetime.now().strftime('%Y.%m.%d-%H:%M:%S')
+    #         # 获取当前处理到的段落索引
+    #         current_index = self.doc_processor.current_paragraph
+    #         # 在文本框中插入指定信息
+    #         self.output_text.insert(tk.END,
+    #                                 f"{timestamp} 当前处理到第{current_index}段，程序已经暂停，如需继续运行，请点击（继续）按钮\n")
+    #         self.output_text.see(tk.END)  # 滚动到文本末尾
+
+    # def pause_resume_process(self):
+    #     if self.should_pause:  # 如果当前处于暂停状态
+    #         self.should_pause = False  # 设置为继续状态
+    #         self.pause_button.config(text="暂停")  # 修改按钮文本为“暂停”
+    #         self.pause_status_label.config(text="")  # 清空状态信息
+    #
+    #         # 在新线程中启动倒计时
+    #         Thread(target=self.countdown_and_resume, args=(5,)).start()  # 倒计时 5 秒并继续运行
+    #     else:
+    #         self.should_pause = True  # 设置为暂停状态
+    #         self.pause_button.config(text="继续")  # 修改按钮文本为“继续”
+    #         timestamp = datetime.now().strftime('%Y.%m.%d-%H:%M:%S')
+    #         # 获取当前处理到的段落索引
+    #         current_index = self.doc_processor.current_paragraph
+    #         # 在文本框中插入指定信息
+    #         self.output_text.insert(tk.END,
+    #                                 f"{timestamp} 当前处理到第{current_index}段，程序已经暂停，如需继续运行，请点击（继续）按钮\n")
+    #
+    #         self.output_text.see(tk.END)  # 滚动到文本末尾
+
     def pause_resume_process(self):
         if self.should_pause:  # 如果当前处于暂停状态
-            self.should_pause = False  # 设置为继续状态
+
             self.pause_button.config(text="暂停")  # 修改按钮文本为“暂停”
-            self.pause_status_label.config(text="")  # 清空状态信息
+            # self.pause_status_label.config(text="")  # 清空状态信息
+
+            # 在新线程中启动倒计时
+            Thread(target=self.countdown_after_resume, args=(5,)).start()  # 倒计时 5 秒并继续运行
+
         else:
             self.should_pause = True  # 设置为暂停状态
             self.pause_button.config(text="继续")  # 修改按钮文本为“继续”
@@ -117,6 +168,25 @@ class GUI:
                                     f"{timestamp} 当前处理到第{current_index}段，程序已经暂停，如需继续运行，请点击（继续）按钮\n")
             self.output_text.see(tk.END)  # 滚动到文本末尾
 
+
+    # def pause_resume_process(self):
+    #     if self.should_pause:  # 如果当前处于暂停状态
+    #         self.should_pause = False  # 设置为继续状态
+    #         self.pause_button.config(text="暂停")  # 修改按钮文本为“暂停”
+    #         self.pause_status_label.config(text="")  # 清空状态信息
+    #
+    #         # 在新线程中启动倒计时
+    #         Thread(target=self.countdown, args=(5,)).start()  # 倒计时 5 秒
+    #     else:
+    #         self.should_pause = True  # 设置为暂停状态
+    #         self.pause_button.config(text="继续")  # 修改按钮文本为“继续”
+    #         timestamp = datetime.now().strftime('%Y.%m.%d-%H:%M:%S')
+    #         # 获取当前处理到的段落索引
+    #         current_index = self.doc_processor.current_paragraph
+    #         # 在文本框中插入指定信息
+    #         self.output_text.insert(tk.END,
+    #                                 f"{timestamp} 当前处理到第{current_index}段，程序已经暂停，如需继续运行，请点击（继续）按钮\n")
+    #         self.output_text.see(tk.END)  # 滚动到文本末尾
     def process_text_thread(self):
         if self.doc_processor.content:
             # 获取用户输入的等待时间
@@ -135,7 +205,7 @@ class GUI:
                 template = self.templates[template_index - 1]  # 获取选定的模板
             for index, part in enumerate(self.doc_processor.content.split('\n'), 1):
                 while self.should_pause:  # 检查是否需要暂停
-                    self.master.update()  # 更新界面
+                    time.sleep(1)  # 暂停一秒
                     continue  # 继续等待暂停解除
 
                 # 显示当前的文本内容和时间
