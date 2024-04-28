@@ -7,7 +7,7 @@ from document_processor import DocumentProcessor
 import json
 import gui_setup
 import tkinter as tk
-
+import time
 class GUI:
     def __init__(self, master):
         self.master = master
@@ -87,9 +87,19 @@ class GUI:
             self.master.update()
 
             self.process_button.config(state="disabled")
-            Thread(target=self.process_text_thread).start()
+            # 在新线程中启动倒计时
+            Thread(target=self.countdown, args=(5,)).start()  # 倒计时 5 秒
         else:
             messagebox.showinfo("提示", "请选择一个 Word 文档")
+
+    def countdown(self, seconds):
+        for i in range(seconds, 0, -1):
+            time.sleep(1)  # 暂停一秒
+            self.output_text.insert(tk.END, f"倒计时 {i} 秒...请将鼠标放置在网页对话框中\n")
+            self.output_text.see(tk.END)
+            self.master.update()
+        # 倒计时结束，开始执行后续步骤
+        Thread(target=self.process_text_thread).start()
 
     def pause_resume_process(self):
         if self.should_pause:  # 如果当前处于暂停状态
@@ -130,7 +140,7 @@ class GUI:
 
                 # 显示当前的文本内容和时间
                 timestamp = datetime.now().strftime('%Y.%m.%d-%H:%M:%S')
-                self.output_text.insert(tk.END, f"{timestamp} 第{index}段 复制成功，请将鼠标放置在模型对话框中⌛️\n")
+                self.output_text.insert(tk.END, f"{timestamp} 第{index}段 复制成功，请勿移动鼠标⌛️\n")
                 # 滚动到文本末尾
                 self.output_text.see(tk.END)
                 # 更新界面以显示实时内容

@@ -1,0 +1,3 @@
+([('app_v1_8',
+   '/Users/zhangbinxuan/Documents/free-self-instruct/app/大模型自动提问脚本app/dist/app_v1_8',
+   'EXECUTABLE')],)
