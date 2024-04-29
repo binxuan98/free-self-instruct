@@ -22,9 +22,9 @@ def setup_gui(self):
     self.label_template = tk.Label(self.template_selection_frame, text="第2步:选择模板：")
     self.label_template.pack(side=tk.LEFT, padx=2, pady=2)
     # 添加自定义模板选项
-    template_options = ["模板1", "模板2", "模板3", "模板4", "自定义"]  # List of template options including "自定义"
+    template_options = ["通用", "文旅-管理角度", "文旅-游客角度", "小红书", "知乎","自定义"]  # List of template options including "自定义"
     self.selected_template = tk.StringVar(self.master)
-    self.selected_template.set("模板1")  # 默认选择第一个模板
+    self.selected_template.set("通用")  # 默认选择第一个模板
     self.template_option = tk.OptionMenu(self.template_selection_frame, self.selected_template,
                                          *template_options, command=self.update_template_text)
     self.template_option.pack(side=tk.LEFT, padx=2, pady=2)
@@ -65,34 +65,52 @@ def setup_gui(self):
     # 定义模板内容
     self.templates = [
         '''
-        根据以下文旅知识：
-        "{content}"
-        请你为我构造一个多轮问答数据,包含用户的问题instruction和你认为的标准答案output,你认为的标准答案请尽可能的字数多一点，输出三条结构化 JSON 对象：
-        { "instruction": "", "input": "", "output": " "  },
+根据以下文旅知识：
+"{content}"
+
+请你根据上述文旅知识，构造一个多轮问答数据，其中包含问题(input)和标准答案(output)。确保问题和答案与文旅领域相关，并尽量提供详细、连贯的答案。如果需要，你可以为问题添加相应的指令(instruction)。请分三行输出三条结构化 JSON 对象：
+
+{
+  "instruction": "",
+  "input": "",
+  "output": ""
+}
         ''',
         '''
         根据以下文旅知识：
-        "{content}"
-        从【文旅管理单位】的角度出发,请你为我构造一个多轮问答数据,包含用户的问题instruction和你认为的标准答案output,你认为的标准答案请尽可能的字数多一点，输出三条结构化 JSON 对象：
-        { "instruction": "", "input": "", "output": " "  },
+        "{content}"\n
+        请你为我构造一个多轮问答数据,包含用户的问题input和你认为的标准答案output,你认为的标准答案请尽量回答的全面且有逻辑，回答的越详细越好，“从文旅管理单位的角度出发”作为instruction指令，分三行输出三条结构化 JSON 对象：
+        { "instruction": "从文旅管理单位的角度出发", "input": "", "output": " "  },
         ''',
         '''
         根据以下文旅知识：
-        "{content}"
-        从【游客】的角度出发，请你为我构造一个多轮问答数据,包含用户的问题instruction和你认为的标准答案output,你认为的标准答案请尽可能的字数多一点，输出三条结构化 JSON 对象：
-        { "instruction": "", "input": "", "output": " "  },
+        "{content}"\n
+        请你为我构造一个多轮问答数据,包含用户的问题input和你认为的标准答案output,你认为的标准答案请尽量回答的全面且有逻辑，回答的越详细越好，“从游客的角度出发”作为instruction指令，分三行输出三条结构化 JSON 对象：
+        { "instruction": "从游客的角度出发", "input": "", "output": " "  },
         ''',
         '''
-        根据以下文旅知识：
-        "{content}"
-        从【旅游平台】的角度出发，请你为我构造一个多轮问答数据,包含用户的问题instruction和你认为的标准答案output,你认为的标准答案请尽可能的字数多一点，输出三条结构化 JSON 对象：
-        { "instruction": "", "input": "", "output": " "  },
+        以下内容是小红书风格文字：
+        "{content}"\n
+        请你为我构造一个多轮问答数据,包含问题input和你认为的标准答案output,你认为的标准答案请尽量回答的全面且有逻辑，回答的越详细越好，“用小红书风格来回答”作为instruction指令，分三行输出三条结构化 JSON 对象：
+        { "instruction": "用小红书风格来回答", "input": "", "output": " "  },
+        ''',
+        '''
+        以下内容是知乎风格文字：
+        "{content}"\n
+        请你为我构造一个多轮问答数据,包含问题input和你认为的标准答案output,你认为的标准答案请尽量回答的全面且有逻辑，回答的越详细越好，“用知乎风格来回答”作为instruction指令，分三行输出三条结构化 JSON 对象：
+        { "instruction": "用知乎风格来回答", "input": "", "output": " "  },
+        ''',
+        '''
+        以下内容是<建议修改>风格文字：
+        "{content}"\n
+        请你为我构造一个多轮问答数据,包含问题input和你认为的标准答案output,你认为的标准答案请尽量回答的全面且有逻辑，回答的越详细越好，“用<建议修改>来回答”作为instruction指令，分三行输出三条结构化 JSON 对象：
+        { "instruction": "用<建议修改>来回答", "input": "", "output": " "  },
         '''
     ]
 
 
     # 初始化模板文本框显示模板1的
-    self.update_template_text("模板1")
+    self.update_template_text("通用")
 
     # 创建变量用于存储当前复制粘贴的内容
     self.copy_content = tk.StringVar()

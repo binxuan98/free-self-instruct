@@ -12,7 +12,7 @@ class GUI:
     def __init__(self, master):
         self.master = master
         master.title("大模型自动对话脚本")
-        master.iconbitmap("icon.ico")
+        # master.iconbitmap("icon.ico")  #新增app图标
 
 
         self.should_pause = False  # 暂停标志
@@ -169,24 +169,7 @@ class GUI:
             self.output_text.see(tk.END)  # 滚动到文本末尾
 
 
-    # def pause_resume_process(self):
-    #     if self.should_pause:  # 如果当前处于暂停状态
-    #         self.should_pause = False  # 设置为继续状态
-    #         self.pause_button.config(text="暂停")  # 修改按钮文本为“暂停”
-    #         self.pause_status_label.config(text="")  # 清空状态信息
-    #
-    #         # 在新线程中启动倒计时
-    #         Thread(target=self.countdown, args=(5,)).start()  # 倒计时 5 秒
-    #     else:
-    #         self.should_pause = True  # 设置为暂停状态
-    #         self.pause_button.config(text="继续")  # 修改按钮文本为“继续”
-    #         timestamp = datetime.now().strftime('%Y.%m.%d-%H:%M:%S')
-    #         # 获取当前处理到的段落索引
-    #         current_index = self.doc_processor.current_paragraph
-    #         # 在文本框中插入指定信息
-    #         self.output_text.insert(tk.END,
-    #                                 f"{timestamp} 当前处理到第{current_index}段，程序已经暂停，如需继续运行，请点击（继续）按钮\n")
-    #         self.output_text.see(tk.END)  # 滚动到文本末尾
+
     def process_text_thread(self):
         if self.doc_processor.content:
             # 获取用户输入的等待时间
@@ -201,8 +184,11 @@ class GUI:
                     return
                 template = custom_template
             else:
-                template_index = int(selected_template[-1])  # 提取模板索引
-                template = self.templates[template_index - 1]  # 获取选定的模板
+                # 获取模板选项的索引
+                template_options = ["通用", "文旅-管理角度", "文旅-游客角度", "小红书", "知乎"
+                                    ]
+                template_index = template_options.index(selected_template)
+                template = self.templates[template_index]  # 获取选定的模板
             for index, part in enumerate(self.doc_processor.content.split('\n'), 1):
                 while self.should_pause:  # 检查是否需要暂停
                     time.sleep(1)  # 暂停一秒
@@ -232,16 +218,22 @@ class GUI:
         self.status_label.config(text=status_text)
 
     def update_template_text(self, selected_template):
+        # 获取模板选项的索引
+        template_options = ["通用", "文旅-管理角度", "文旅-游客角度", "小红书", "知乎","自定义"]
+        template_index = template_options.index(selected_template)
+
+        # 如果选择的是自定义模板，那么允许用户在文本框中编辑
         if selected_template == "自定义":
             self.template_text.config(state=tk.NORMAL)  # 允许在模板文本框中编辑
             self.template_text.delete('1.0', tk.END)  # 清空文本框
-            self.template_content.set("")  # 清空模板内容变量
+            self.template_text.insert(tk.END, self.templates[template_index])  # 插入选定模板内容
+            self.template_content.set(self.templates[template_index])  # 更新模板内容变量
         else:
-            template_index = int(selected_template[-1])  # 提取模板索引
+            # 否则，从模板列表中获取对应的模板内容
             self.template_text.config(state=tk.NORMAL)  # 允许在模板文本框中编辑
             self.template_text.delete('1.0', tk.END)  # 清空文本框
-            self.template_text.insert(tk.END, self.templates[template_index - 1])  # 插入选定模板内容
-            self.template_content.set(self.templates[template_index - 1])  # 更新模板内容变量
+            self.template_text.insert(tk.END, self.templates[template_index])  # 插入选定模板内容
+            self.template_content.set(self.templates[template_index])  # 更新模板内容变量
             self.template_text.config(state=tk.DISABLED)  # 禁止在模板文本框中编辑
 
     def collect_json_data(self):
